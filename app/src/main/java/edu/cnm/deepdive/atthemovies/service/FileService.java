@@ -43,6 +43,8 @@ public class FileService {
         }
       }).start();
     }
+
+
     public void getFromFile(final MutableLiveData<Map<Long,Movie>> movies){
       new Thread(new Runnable() {
         @Override
