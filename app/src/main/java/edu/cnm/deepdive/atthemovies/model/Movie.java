@@ -1,17 +1,21 @@
 package edu.cnm.deepdive.atthemovies.model;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Movie implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  public static Long last_id = 0L;
-
-  private long id;
+  @PrimaryKey(autoGenerate = true)
+  private Long id;
 
   private String title;
 
@@ -21,20 +25,10 @@ public class Movie implements Serializable {
     HORROR, ACTION, ROMCOM, DOCUMENTARY, ANIME, SCFI, FANTASY
   }
 
+  @TypeConverters(GenreConverter.class)
   private Genre genre;
 
   private List<Actor> actors = new ArrayList<>();
-
-  public Movie() {
-    id = ++last_id;
-  }
-
-  public Movie(Long id){
-    if (last_id < id){
-        last_id = id;
-    }
-    this.id = id;
-  }
 
   public Long getId() {
     return id;
@@ -79,4 +73,16 @@ public class Movie implements Serializable {
     return title + ": " + genre;
   }
 
+  private static class GenreConverter {
+
+    @TypeConverter
+    public static Genre stringToGenre(String value){
+      return Genre.valueOf(value);
+    }
+
+    @TypeConverter
+    public static String genreToString(Genre genre){
+      return genre.name();
+    }
+  }
 }
