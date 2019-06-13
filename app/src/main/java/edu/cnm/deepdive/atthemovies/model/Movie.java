@@ -28,10 +28,12 @@ public class Movie implements Serializable {
   @TypeConverters(GenreConverter.class)
   private Genre genre;
 
-  private List<Actor> actors = new ArrayList<>();
-
   public Long getId() {
     return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getTitle() {
@@ -42,16 +44,7 @@ public class Movie implements Serializable {
     this.title = title;
   }
 
-  public List<Actor> getActors() {
-    return actors;
-  }
-
-  public void setActors(List<Actor> actors) {
-    this.actors = actors;
-  }
-
-
-  public String getScreenwriter() {
+   public String getScreenwriter() {
     return screenwriter;
   }
 
@@ -73,7 +66,7 @@ public class Movie implements Serializable {
     return title + ": " + genre;
   }
 
-  private static class GenreConverter {
+  public static class GenreConverter {
 
     @TypeConverter
     public static Genre stringToGenre(String value){

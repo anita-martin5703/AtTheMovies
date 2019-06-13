@@ -21,6 +21,7 @@ import androidx.navigation.Navigation;
 import edu.cnm.deepdive.atthemovies.model.Movie;
 import edu.cnm.deepdive.atthemovies.viewmodel.MoviesViewModel;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -52,11 +53,11 @@ public class MoviesFragment extends Fragment {
 
     final MoviesViewModel viewModel = ViewModelProviders.of(getActivity()).get(MoviesViewModel.class);
 
-    viewModel.getMoviesLiveData(context).observe(this, new Observer<Map<Long, Movie>>() {
+    viewModel.getMoviesLiveData().observe(this, new Observer<List<Movie>>() {
       @Override
-      public void onChanged(Map<Long, Movie> longMovieMap) {
+      public void onChanged(List<Movie> movieList) {
         final ArrayAdapter<Movie> adapter = new ArrayAdapter<Movie>(context, android.R.layout.simple_list_item_1,
-            new ArrayList<Movie>(longMovieMap.values()));
+            movieList);
         moviesListView.setAdapter(adapter);
         moviesListView.setOnItemClickListener(new OnItemClickListener() {
           @Override
@@ -86,7 +87,7 @@ public class MoviesFragment extends Fragment {
         newMovie.setTitle(newMovieNameEditText.getText().toString());
         newMovie.setScreenwriter(newMovieScreenwriter.getText().toString());
         newMovie.setGenre((Movie.Genre) genreSpinner.getSelectedItem());
-        viewModel.addMovie(newMovie, context);
+        viewModel.addMovie(newMovie);
         newMovieNameEditText.setText("");
       }
     });
