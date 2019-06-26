@@ -2,9 +2,16 @@ package edu.cnm.deepdive.atthemovies.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.io.Serializable;
-@Entity
+
+@Entity(
+    indices = {
+          @Index(value = "name", unique = true)
+    }
+)
+
 public class Actor implements Serializable {
 
   private static final long serialVersionUID = 1L;
